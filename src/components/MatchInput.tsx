@@ -1,5 +1,16 @@
-import React from "react";
 import { useEffect, useState } from "react";
+import { styled } from 'styled-components';
+import { Error } from '../styles';
+
+
+const Score = styled.input`
+  width: 50px;
+  margin: 10px;
+  text-align: center;
+  padding: 14px;
+`;
+
+
 
 function MatchInput({ names, onSubmit }: {names: string[], onSubmit: Function}) {
 
@@ -17,25 +28,27 @@ function MatchInput({ names, onSubmit }: {names: string[], onSubmit: Function}) 
   const handleSubmit = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     if (homeName === awayName) {
-      setError('The players cannot be the same');
+      setError('The opposing sides cannot be the same');
     } else if (homeScore === '' || awayScore === '') {
-      setError('Fill in both scores');
+      setError('You need to fill in both scores');
     } else {
       setError('');
       onSubmit({ homeName, homeScore, awayScore, awayName });
+      setHomeScore('');
+      setAwayScore('');
     }
   };
 
   return (
     <>
-      <p className="error">{error}</p>
+     {error && <Error>{error}</Error>}
       <form>
         <select name="homeName" id="homeName" value={homeName} onChange={({ target }) => setHomeName(target.value)}>
           {names.map((name: string, i: number) => <option key={i} value={name}>{name}</option>)}
         </select>
-        <input id="homeScore" className="score"  onChange={({ target }) => setHomeScore(target.value)} /> 
-        vs
-        <input id="awayScore" className="score" onChange={({ target }) => setAwayScore(target.value)} />
+        <Score id="homeScore" value={homeScore} onChange={({ target }) => setHomeScore(target.value)} /> 
+        v
+        <Score id="awayScore" value={awayScore} onChange={({ target }) => setAwayScore(target.value)} />
         <select name="awayName" id="awayName" value={awayName} onChange={({ target }) => setAwayName(target.value)}>
           {names.map((name: string, i: number) => <option key={i} value={name}>{name}</option>)}
         </select>

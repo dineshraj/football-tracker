@@ -1,4 +1,28 @@
 import { match } from '../types';
+import { styled } from 'styled-components';
+
+const GameTable = styled.table`
+  border-spacing: 0;
+`;
+
+const GameTableColumn = styled.td`
+  width: 100px;
+  text-align: right;
+  padding: 10px;
+  border-bottom: 1px solid #282828;
+`;
+
+const GameTableHeader = styled(GameTableColumn)`
+  background-color: black;
+`;
+const GameTableTeamHeader = styled(GameTableHeader)`
+  text-align: left;
+`;
+
+const GameTableTeam = styled(GameTableColumn)`
+  text-align: left;
+  background-color: none;
+`;
 
 function Table({ matches }: { matches: match[] }) {
 
@@ -59,38 +83,42 @@ function Table({ matches }: { matches: match[] }) {
 
   const table = createTable();
 
+  if (!table.length) return null;
+
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th>Team</th>
-          <th>Played</th>
-          <th>Won</th>
-          <th>Draw</th>
-          <th>Lost</th>
-          <th>Goals For</th>
-          <th>Goals Against</th>
-          <th>Goal Difference</th>
-          <th>Points</th>
-        </tr>
-        {table.map((row, i) => {
-          console.log('row', row);
-          return (
-            <tr key={i}>
-              <td>{row[0]}</td>
-              <td>{row[1].played}</td>
-              <td>{row[1].won}</td>
-              <td>{row[1].drawn}</td>
-              <td>{row[1].lost}</td>
-              <td>{row[1].goalsFor}</td>
-              <td>{row[1].goalsAgainst}</td>
-              <td>{row[1].goalDifference}</td>
-              <td>{row[1].points}</td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <>
+      <h2>Table</h2>
+      <GameTable>
+        <tbody>
+          <tr>
+            <GameTableTeamHeader>Team</GameTableTeamHeader>
+            <GameTableHeader>Played</GameTableHeader>
+            <GameTableHeader>Won</GameTableHeader>
+            <GameTableHeader>Draw</GameTableHeader>
+            <GameTableHeader>Lost</GameTableHeader>
+            <GameTableHeader>For</GameTableHeader>
+            <GameTableHeader>Against</GameTableHeader>
+            <GameTableHeader>GD</GameTableHeader>
+            <GameTableHeader>Points</GameTableHeader>
+          </tr>
+          {table.map((row, i) => {
+            return (
+              <tr key={i}>
+                <GameTableTeam>{row[0]}</GameTableTeam>
+                <GameTableColumn>{row[1].played}</GameTableColumn>
+                <GameTableColumn>{row[1].won}</GameTableColumn>
+                <GameTableColumn>{row[1].drawn}</GameTableColumn>
+                <GameTableColumn>{row[1].lost}</GameTableColumn>
+                <GameTableColumn>{row[1].goalsFor}</GameTableColumn>
+                <GameTableColumn>{row[1].goalsAgainst}</GameTableColumn>
+                <GameTableColumn>{row[1].goalDifference}</GameTableColumn>
+                <GameTableColumn>{row[1].points}</GameTableColumn>
+              </tr>
+            )
+          })}
+        </tbody>
+      </GameTable>
+    </>
   );
 
 }

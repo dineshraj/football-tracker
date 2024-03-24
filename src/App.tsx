@@ -7,9 +7,11 @@ import Game from './components/Game';
 
 
 const Title = styled.h1`
-  color: white;
+  color: #70f079;
+  font-family: 'Tahoma';
+  letter-spacing: 1px;
+  margin-bottom: 70px;
 `;
-
 
 function App() {
   const [component, setComponent] = useState('names')
@@ -25,18 +27,23 @@ function App() {
   }
 
   const handleOnNext = () => {
-    if (names.length) {
-      setComponent('games')
-    }
+    setComponent('games')
   }
+
+  const handleRemoveName = (indexToRemove: number) => {
+    setName((previousMatches) => {
+      const updatedItems = previousMatches.filter((_, index) => index !== indexToRemove);
+      return updatedItems;
+    });
+  }
+
 
   return (
     <>
-    <Title>FIFA Tournament Tracker</Title>
-    {component === 'names' ? <Names onNext={handleOnNext} addName={handleAddName} names={names} /> : <Game names={names} />} 
+      <Title>FOOTBALL TOURNAMENT TRACKER</Title>
+      {component === 'names' ? <Names onNext={handleOnNext} addName={handleAddName} removeName={handleRemoveName} names={names} /> : <Game names={names} />} 
     </>
   );
-
 }
 
-export default App
+export default App;

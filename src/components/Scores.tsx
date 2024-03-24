@@ -4,21 +4,31 @@ import { match } from '../types';
 const Table = styled.table`
   width: 50%;
   margin: 0 auto;
-  
   margin-top: 20px;
 `;
 
 const TableColumn = styled.td`
-  padding: 10px;
-  border: 1px solid black;
+  padding: 5px 10px;
+  border: 1px solid #282828;
+`;
+
+const TableRow = styled.tr`
+  height: 60px;
 `;
 
 const PlayerName = styled(TableColumn)`
-  background-color: grey;
+  background-color: #282828;
+  width: 100px;
 `;
 
 const RemoveColumn = styled(TableColumn)`
   border: none;
+`;
+
+const RemoveButton = styled.button`
+  padding: 3px 10px 5px;
+  background-color: grey;
+  width: 35px;
 `;
 
 
@@ -27,23 +37,25 @@ function Scores({ matches, removeMatch }: { matches: match[], removeMatch: Funct
   if (!matches.length) return null;
 
   return (
-    <Table className="scores">
-      <tbody>
-
-      {matches.map((match: match, i: number) => {
-        return (
-          <tr key={i}>
-            <PlayerName>{match.homeName}</PlayerName>
-            <TableColumn>{match.homeScore}</TableColumn>
-            <TableColumn>v</TableColumn>
-            <TableColumn>{match.awayScore}</TableColumn>
-            <PlayerName>{match.awayName}</PlayerName>
-            <RemoveColumn><button onClick={() => removeMatch(i)}>-</button></RemoveColumn>
-          </tr>
-          )
-        })}
-      </tbody>
-    </Table>
+    <>
+      <h2>Scores</h2>
+      <Table className="scores">
+        <tbody>
+        {matches.map((match: match, i: number) => {
+          return (
+            <TableRow key={i}>
+              <PlayerName>{match.homeName}</PlayerName>
+              <TableColumn>{match.homeScore}</TableColumn>
+              <TableColumn>v</TableColumn>
+              <TableColumn>{match.awayScore}</TableColumn>
+              <PlayerName>{match.awayName}</PlayerName>
+              <RemoveColumn><RemoveButton onClick={() => removeMatch(i)}>-</RemoveButton></RemoveColumn>
+            </TableRow>
+            )
+          })}
+        </tbody>
+      </Table>
+    </>
   );
 }
 
