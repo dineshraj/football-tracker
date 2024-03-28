@@ -10,6 +10,19 @@ const Score = styled.input`
   padding: 14px;
 `;
 
+const Form = styled.form`
+  border: 1px solid #92ed86;
+  padding-bottom: 20px;
+`;
+
+const Team = styled.select`
+  min-width: 150px;
+`;
+
+const ScoreText = styled.p`
+  margin-bottom: 0;
+  color: #92ed86;
+`;
 
 
 function MatchInput({ names, onSubmit }: {names: string[], onSubmit: Function}) {
@@ -42,18 +55,19 @@ function MatchInput({ names, onSubmit }: {names: string[], onSubmit: Function}) 
   return (
     <>
      {error && <Error>{error}</Error>}
-      <form>
-        <select name="homeName" id="homeName" value={homeName} onChange={({ target }) => setHomeName(target.value)}>
+      <Form>
+        <ScoreText>Enter score</ScoreText>
+        <Team name="homeName" id="homeName" value={homeName} onChange={({ target }) => setHomeName(target.value)}>
           {names.map((name: string, i: number) => <option key={i} value={name}>{name}</option>)}
-        </select>
+        </Team>
         <Score id="homeScore" value={homeScore} onChange={({ target }) => setHomeScore(target.value)} /> 
         v
         <Score id="awayScore" value={awayScore} onChange={({ target }) => setAwayScore(target.value)} />
-        <select name="awayName" id="awayName" value={awayName} onChange={({ target }) => setAwayName(target.value)}>
+        <Team name="awayName" id="awayName" value={awayName} onChange={({ target }) => setAwayName(target.value)}>
           {names.map((name: string, i: number) => <option key={i} value={name}>{name}</option>)}
-        </select>
+        </Team>
         <button onClick={handleSubmit}>+</button>
-      </form>
+      </Form>
     </>
   );
 }

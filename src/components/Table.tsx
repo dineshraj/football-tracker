@@ -1,8 +1,9 @@
-import { match } from '../types';
+import { Match, TableRow } from '../types';
 import { styled } from 'styled-components';
 
 const GameTable = styled.table`
   border-spacing: 0;
+  width: 100%;
 `;
 
 const GameTableColumn = styled.td`
@@ -24,66 +25,82 @@ const GameTableTeam = styled(GameTableColumn)`
   background-color: none;
 `;
 
-function Table({ matches }: { matches: match[] }) {
-
+function Table({ matches }: { matches: Match[] }) {
   const createTable = () => {
-    const teamStats = {};
+    const table: TableRow[] = [];
+    const initialValues: TableRow = {
+      played: 0,
+      won: 0,
+      drawn: 0,
+      lost: 0,
+      goalsFor: 0,
+      goalsAgainst: 0,
+      goalDifference: 0,
+      points: 0,
+    }
 
-    matches.forEach(match => {
-      const homeTeam = match.homeName;
-      const awayTeam = match.awayName;
-      const homeScore = parseInt(match.homeScore);
-      const awayScore = parseInt(match.awayScore);
+    const addStats = (homeTeamIndex: number, awayTeamIndex: number,  homeScore: number, awayScore: number) => {
+      table[homeTeamIndex].played++;
+      table[homeTeamIndex].goalsFor += homeScore;
+      table[homeTeamIndex].goalsAgainst += awayScore;
       
-      // Initialize team stats if not already present
-      teamStats[homeTeam] = teamStats[homeTeam] || { goalsFor: 0, goalsAgainst: 0, points: 0, played: 0, won: 0, drawn: 0, lost: 0 };
-      teamStats[awayTeam] = teamStats[awayTeam] || { goalsFor: 0, goalsAgainst: 0, points: 0, played: 0, won: 0, drawn: 0, lost: 0 };
-  
-      // Update goals for and against
-      teamStats[homeTeam].goalsFor += homeScore;
-      teamStats[homeTeam].goalsAgainst += awayScore;
-      teamStats[awayTeam].goalsFor += awayScore;
-      teamStats[awayTeam].goalsAgainst += homeScore;
-  
-      // Update points and matches played
+      table[awayTeamIndex].played++;
+      table[awayTeamIndex].goalsFor += awayScore;
+      table[awayTeamIndex].goalsAgainst += homeScore;
+
       if (homeScore > awayScore) {
-          teamStats[homeTeam].points += 3;
-          teamStats[homeTeam].won++;
-          teamStats[awayTeam].lost++;
+        table[homeTeamIndex].points += 3;
+        table[homeTeamIndex].won++;
+        table[awayTeamIndex].lost++;
       } else if (homeScore < awayScore) {
-          teamStats[awayTeam].points += 3;
-          teamStats[awayTeam].won++;
-          teamStats[homeTeam].lost++;
+        table[awayTeamIndex].points += 3;
+        table[awayTeamIndex].won++;
+        table[homeTeamIndex].lost++;
       } else {
-          teamStats[homeTeam].points += 1;
-          teamStats[awayTeam].points += 1;
-          teamStats[homeTeam].drawn++;
-          teamStats[awayTeam].drawn++;
+          table[homeTeamIndex].points += 1;
+          table[awayTeamIndex].points += 1;
+          table[homeTeamIndex].drawn++;
+          table[awayTeamIndex].drawn++;
       }
-      teamStats[homeTeam].played++;
-      teamStats[awayTeam].played++;
-    });
+    }
+
+    matches.forEach((match) => {
+      const homeTeam: string = match.homeName;
+      const awayTeam: string = match.awayName;
+      const homeScore: number = parseInt(match.homeScore);
+      const awayScore: number = parseInt(match.awayScore);
+
+      let homeTeamIndex = table.findIndex(row => row.team === homeTeam);
+      let awayTeamIndex = table.findIndex(row => row.team === awayTeam);
+
+      if (homeTeamIndex < 0) {
+        homeTeamIndex = (table.push({ team: homeTeam, ...initialValues }) - 1)
+      }
+      if (awayTeamIndex < 0) {
+        awayTeamIndex = (table.push({ team: awayTeam, ...initialValues }) - 1)
+      }
+      
+      addStats(homeTeamIndex, awayTeamIndex, homeScore, awayScore);
+    });    
 
     // Calculate goal difference
-    Object.values(teamStats).forEach(team => {
-      team.goalDifference = team.goalsFor - team.goalsAgainst;
+    Object.values(table).forEach((row: TableRow) => {
+      row.goalDifference = row.goalsFor - row.goalsAgainst;
     });
 
-    // Sort teams by points and then goal difference in descending order
-    const sortedTeams = Object.entries(teamStats).sort((a, b) => {
-      if (a[1].points !== b[1].points) {
-          return b[1].points - a[1].points;
+    const sortedTable = table.sort((a, b) => {
+      if (a.points !== b.points) {
+        return b.points - a.points;
       } else {
-          return b[1].goalDifference - a[1].goalDifference;
+        return b.goalDifference - a.goalDifference;  
       }
-    });
-
-    return sortedTeams;
+    })
+    return sortedTable;
   };
 
-  const table = createTable();
+  const currentTable = createTable();
 
-  if (!table.length) return null;
+  if (!currentTable.length) return null;
 
   return (
     <>
@@ -101,18 +118,18 @@ function Table({ matches }: { matches: match[] }) {
             <GameTableHeader>GD</GameTableHeader>
             <GameTableHeader>Points</GameTableHeader>
           </tr>
-          {table.map((row, i) => {
+          {currentTable.map((row, i) => {
             return (
               <tr key={i}>
-                <GameTableTeam>{row[0]}</GameTableTeam>
-                <GameTableColumn>{row[1].played}</GameTableColumn>
-                <GameTableColumn>{row[1].won}</GameTableColumn>
-                <GameTableColumn>{row[1].drawn}</GameTableColumn>
-                <GameTableColumn>{row[1].lost}</GameTableColumn>
-                <GameTableColumn>{row[1].goalsFor}</GameTableColumn>
-                <GameTableColumn>{row[1].goalsAgainst}</GameTableColumn>
-                <GameTableColumn>{row[1].goalDifference}</GameTableColumn>
-                <GameTableColumn>{row[1].points}</GameTableColumn>
+                <GameTableTeam>{row.team}</GameTableTeam>
+                <GameTableColumn>{row.played}</GameTableColumn>
+                <GameTableColumn>{row.won}</GameTableColumn>
+                <GameTableColumn>{row.drawn}</GameTableColumn>
+                <GameTableColumn>{row.lost}</GameTableColumn>
+                <GameTableColumn>{row.goalsFor}</GameTableColumn>
+                <GameTableColumn>{row.goalsAgainst}</GameTableColumn>
+                <GameTableColumn>{row.goalDifference}</GameTableColumn>
+                <GameTableColumn>{row.points}</GameTableColumn>
               </tr>
             )
           })}
@@ -120,7 +137,6 @@ function Table({ matches }: { matches: match[] }) {
       </GameTable>
     </>
   );
-
 }
 
 export default Table;

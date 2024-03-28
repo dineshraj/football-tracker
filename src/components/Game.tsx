@@ -2,13 +2,8 @@ import { useState } from 'react';
 import MatchInput from './MatchInput';
 import Table from './Table';
 import Scores from './Scores';
+import { Match } from '../types'
 
-interface Match {
-  homeName: string;
-  homeScore: string;
-  awayName: string;
-  awayScore: string;
-}
 
 function Game({ names }: {names: string[]}) {
   const [matches, setMatch] = useState<Match[]>([]);

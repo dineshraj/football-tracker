@@ -5,7 +5,7 @@ export const Error = styled.p`
   border: 1px solid white;
   display: inline-block;
   padding: 15px 25px;
-  margin: 0 auto;
+  margin: 0px auto;
   margin-bottom: 40px;
   background-color: orangered;
 `;

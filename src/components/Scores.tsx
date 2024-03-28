@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import { match } from '../types';
+import { Match } from '../types';
 
 const Table = styled.table`
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   margin-top: 20px;
 `;
@@ -32,7 +32,7 @@ const RemoveButton = styled.button`
 `;
 
 
-function Scores({ matches, removeMatch }: { matches: match[], removeMatch: Function } ) {
+function Scores({ matches, removeMatch }: { matches: Match[], removeMatch: Function } ) {
 
   if (!matches.length) return null;
 
@@ -41,7 +41,7 @@ function Scores({ matches, removeMatch }: { matches: match[], removeMatch: Funct
       <h2>Scores</h2>
       <Table className="scores">
         <tbody>
-        {matches.map((match: match, i: number) => {
+        {matches.map((match: Match, i: number) => {
           return (
             <TableRow key={i}>
               <PlayerName>{match.homeName}</PlayerName>
