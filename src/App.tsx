@@ -54,7 +54,7 @@ function App() {
     <>
       <Title>
         <Icon src={football} alt="football" />
-        TOURNYTRACKER
+        TOURNEYTRACKER
       </Title>
       <Content>
         {component === 'names' ? <Names onNext={handleOnNext} addName={handleAddName} removeName={handleRemoveName} names={names} /> : <Game names={names} />} 

@@ -34,12 +34,12 @@ border: 1px solid rgba(255, 255, 255, 0.2);
 border-radius: 35px;
 padding: 14px;
 text-indent: 10px;
-margin: 20px;
+margin-left: 20px;
 font-size: 21px;
 outline: none;
 color: rgba(255, 255, 255, 0.8);
 letter-spacing: 2px;
-width: 470px;
+width: 380px;
 `;
 
 const RemoveButton = styled.button`
@@ -86,9 +86,10 @@ function Names({ onNext, addName, removeName, names }: { onNext: MouseEventHandl
     <NamesWrapper>
       {error !== '' && <Error>{error}</Error>}
       <form onSubmit={handleSubmit}>      
-        <NameInput name="name" type="text" onChange={({ target }) => setFormData(target.value)} value={formData} placeholder="Type a player/team name and hit enter" />
-        {names.length ?  <h2>Players:</h2> : ''}
+        <NameInput name="name" type="text" onChange={({ target }) => setFormData(target.value)} value={formData} placeholder="Type a player/team name" />
+        <button onClick={handleSubmit}>+</button>
       </form>
+      {names.length ?  <h2>Players:</h2> : ''}
       {names.map((name: string, i: number) => {
           return (
             <div key={`row0${i}`}>
