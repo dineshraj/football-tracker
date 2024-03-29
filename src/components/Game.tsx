@@ -27,11 +27,22 @@ function Game({ names }: {names: string[]}) {
     });
   }
 
+  let style;
+
+  if (!matches.length) {
+    style = {
+      display: 'flex',
+      placeItems: 'center',
+      height: '100vh',
+      justifyContent: 'space-evenly'
+    };
+  }
+
   return (
     <>
-      <MatchInput names={names} onSubmit={onSubmit} />
-      <Scores matches={matches} removeMatch={removeMatch} />
+      <MatchInput names={names} onSubmit={onSubmit} style={style}/>
       <Table matches={matches} />
+      <Scores matches={matches} removeMatch={removeMatch} />
     </>
   )
 }

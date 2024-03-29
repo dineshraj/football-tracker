@@ -86,7 +86,7 @@ function Names({ onNext, addName, removeName, names }: { onNext: MouseEventHandl
     <NamesWrapper>
       {error !== '' && <Error>{error}</Error>}
       <form onSubmit={handleSubmit}>      
-        <NameInput name="name" type="text" onChange={({ target }) => setFormData(target.value)} value={formData} placeholder="Type a player name and hit enter" />
+        <NameInput name="name" type="text" onChange={({ target }) => setFormData(target.value)} value={formData} placeholder="Type a player/team name and hit enter" />
         {names.length ?  <h2>Players:</h2> : ''}
       </form>
       {names.map((name: string, i: number) => {

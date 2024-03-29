@@ -10,6 +10,8 @@ const Table = styled.table`
 const TableColumn = styled.td`
   padding: 5px 10px;
   border: 1px solid #282828;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const TableRow = styled.tr`
@@ -23,6 +25,8 @@ const PlayerName = styled(TableColumn)`
 
 const RemoveColumn = styled(TableColumn)`
   border: none;
+  background-color: transparent;
+  width: 40px;
 `;
 
 const RemoveButton = styled.button`

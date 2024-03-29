@@ -4,6 +4,8 @@ import { styled } from 'styled-components';
 const GameTable = styled.table`
   border-spacing: 0;
   width: 100%;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const GameTableColumn = styled.td`

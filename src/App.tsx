@@ -21,8 +21,8 @@ const Content = styled.div`
 
 const Icon = styled.img`
   width: 46px;
-  vertical-align: bottom;
-  margin-right: 20px;
+  vertical-align: sub;
+  margin-right: 13px;
 `;
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
     <>
       <Title>
         <Icon src={football} alt="football" />
-        FOOTBALL TOURNAMENT TRACKER
+        TOURNYTRACKER
       </Title>
       <Content>
         {component === 'names' ? <Names onNext={handleOnNext} addName={handleAddName} removeName={handleRemoveName} names={names} /> : <Game names={names} />} 
