@@ -76,10 +76,10 @@ function Table({ matches }: { matches: Match[] }) {
       let awayTeamIndex = table.findIndex(row => row.team === awayTeam);
 
       if (homeTeamIndex < 0) {
-        homeTeamIndex = (table.push({ team: homeTeam, ...initialValues }) - 1)
+        homeTeamIndex = table.push({ team: homeTeam, ...initialValues }) - 1
       }
       if (awayTeamIndex < 0) {
-        awayTeamIndex = (table.push({ team: awayTeam, ...initialValues }) - 1)
+        awayTeamIndex = table.push({ team: awayTeam, ...initialValues }) - 1
       }
       
       addStats(homeTeamIndex, awayTeamIndex, homeScore, awayScore);

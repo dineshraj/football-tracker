@@ -12,7 +12,7 @@ export interface TableRow {
   drawn: number;
   lost: number;
   goalsFor: number;
-  goalsAgainst: nunber;
+  goalsAgainst: number;
   goalDifference: number;
   points: number;
 }
