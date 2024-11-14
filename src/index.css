@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Tahoma, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   background-image: url('assets/background.jpg');
@@ -22,11 +22,9 @@ body {
 }
 
 h1 {
-  font-size: 60px;
   line-height: 1.1;
   position: sticky;
   color: #70f079;
-  font-family: 'Tahoma';
   letter-spacing: 1px;
   margin-bottom: 70px;
   margin-top: 0;
@@ -93,7 +91,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  
+  color: black;
 }
 button:hover {
   background-color: #8fff96;

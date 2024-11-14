@@ -14,7 +14,8 @@ const NamesWrapper = styled.div`
 
 const NextButton = styled.button`
   margin-top: 30px;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;aaa
 `;
 
 const Name = styled.p`
@@ -34,12 +35,11 @@ border: 1px solid rgba(255, 255, 255, 0.2);
 border-radius: 35px;
 padding: 14px;
 text-indent: 10px;
-margin-left: 20px;
 font-size: 21px;
 outline: none;
 color: rgba(255, 255, 255, 0.8);
 letter-spacing: 2px;
-width: 380px;
+max-width: 380px;
 `;
 
 const RemoveButton = styled.button`
